@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-require 'sinbook'
+require 'base64'
 
 class App < Sinatra::Application
     
@@ -28,16 +28,21 @@ class App < Sinatra::Application
   end
   
   post '/fb' do
+    s = params[:signed_request]
+    a = s.split('.')
+    
+    secret = Base64.decode64(a.first)
+    data   = Base64.decode64(a.last)
+    
     %Q*<html>
        <head>
          <title>My Facebook Logged In Page</title>
        </head>
        <body>
-          <h1>Hi, #{params[:name]}</h1>
-          <p>your email is #{params[:email]}</p>
-          <p>your phone is #{params[:phone_number]}</p>
+       
+        <p>secret: #{secret}</p>
+        <p>secret: #{data}</p>
           
-          <p>#{params.inspect}</p>
        </body>
     </html>*
   end

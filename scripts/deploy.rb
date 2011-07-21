@@ -14,7 +14,6 @@ git fetch origin
 git rebase origin master
 
 echo hupping unicorn
-ls -l local_config/unicorn_hup
 local_config/unicorn_hup
 
 exit"

@@ -36,6 +36,8 @@ class App < Sinatra::Application
           <h1>Hi, #{params[:name]}</h1>
           <p>your email is #{params[:email]}</p>
           <p>your phone is #{params[:phone_number]}</p>
+          
+          <p>#{params.inspect}</p>
        </body>
     </html>*
   end

@@ -13,7 +13,8 @@ class App < Sinatra::Application
   end
     
   get '/' do
-    'It still worked, Ronin! Or does it?'
+    '<p>It still worked, Ronin! Or does it?</p>
+    <p><a href="/fb">Go!</a></p>'
   end
   
   get '/fb' do

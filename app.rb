@@ -4,6 +4,6 @@ require 'sinbook'
 
 class App < Sinatra::Application
   get '/' do
-    'It worked, Ronin!'
+    'It still worked, Ronin!'
   end
 end

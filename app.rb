@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'sinatra'
+require 'sinbook'
 
+class App < Sinatra::Application
     
   get '/' do
     %Q*<html>
@@ -27,3 +29,4 @@ require 'sinatra'
     "Hi!"
   end
   
+end

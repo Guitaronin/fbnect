@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo getting unicorn pid
+pid=$(cat /www/number_guru/tmp/unicorn.pid)
+
+echo hupping unicorn process $pid
+kill -HUP $pid

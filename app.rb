@@ -39,7 +39,7 @@ class App < Sinatra::Application
          <title>My Facebook Logged In Page</title>
        </head>
        <body>
-       
+        <p>response: #{s}</p>
         <p>secret: #{secret}</p>
         <p>secret: #{data}</p>
           

@@ -14,7 +14,7 @@ class App < Sinatra::Application
          <script src="http://connect.facebook.net/en_US/all.js"></script>
          <script>
             FB.init({ 
-               appId:#{119118001500358}, cookie:true, 
+               appId:#{196067387115119}, cookie:true, 
                status:true, xfbml:true 
             });
          </script>

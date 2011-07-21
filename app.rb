@@ -18,7 +18,7 @@ class App < Sinatra::Application
                status:true, xfbml:true 
             });
          </script>
-         <fb:login-button redirect-uri="http://174.122.43.76/fb">
+         <fb:login-button redirect-uri="http://staging.numberguru.com/fb">
             Login with Facebook
          </fb:login-button>
        </body>

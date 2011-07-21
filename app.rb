@@ -8,8 +8,8 @@ class App < Sinatra::Application
     api_key  '119118001500358'
     secret   'b140473706e8567150a196cccb776886'
     app_id   119118001500358
-    url      'http://174.122.43.76/fb'
-    callback 'http://174.122.43.76/fb'
+    url      'http://174.122.43.76/'
+    callback 'http://174.122.43.76/'
   end
     
   get '/' do

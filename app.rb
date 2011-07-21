@@ -21,14 +21,23 @@ class App < Sinatra::Application
          <fb:registration
                  fields="[{'name':'name'}, {'name':'email'},
                  {'name':'phone_number','description':'What is your phone number?',
-                 'type':'text'}]" redirect-uri="http://staging.numberguru.com">
+                 'type':'text'}]" redirect-uri="http://staging.numberguru.com/fb">
          </fb:registration>
        </body>
     </html>*
   end
   
-  get '/fb' do
-    "Hi!"
+  post '/fb' do
+    %Q*<html>
+       <head>
+         <title>My Facebook Logged In Page</title>
+       </head>
+       <body>
+          <h1>Hi, #{params[:name]}</h1>
+          <p>your email is #{params[:email]}</p>
+          <p>your phone is #{params[:phone_number]}</p>
+       </body>
+    </html>*
   end
   
 end

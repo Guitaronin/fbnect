@@ -1,4 +1,4 @@
-APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+# APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 require 'rubygems'
 require 'sinatra'
@@ -9,11 +9,11 @@ APP_ID = 196067387115119 # your app id
 APP_CODE = 'b140473706e8567150a196cccb776886' # your app code
 SITE_URL = 'http://staging.numberguru.com/' # your app site url
 
-class SimpleRubyFacebookExample < Sinatra::Application
+class App < Sinatra::Application
 
 	include Koala  
 
-	set :root, APP_ROOT  
+  # set :root, APP_ROOT  
 	enable :sessions
 
 	get '/' do

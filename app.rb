@@ -48,8 +48,9 @@ class App < Sinatra::Application
 	get '/callback' do
     # return params.inspect
 		#get the access token from facebook with your code
-		session['access_token'] = session['oauth'].get_access_token(params['code'])
-		redirect '/'
+    # session['access_token'] = session['oauth'].get_access_token(params['code'])
+    # redirect '/'
+    "code: #{params['code']}"
 	end
 
 end

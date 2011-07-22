@@ -20,7 +20,7 @@ class App < Sinatra::Application
          </script>
          <fb:registration
                  fields="[{'name':'name'}, {'name':'email'},
-                 {'name':'phone_number','description':'What is your phone number?',
+                 {'name':'phone_number','description':'phone number',
                  'type':'text'}]" redirect-uri="http://staging.numberguru.com/fb">
          </fb:registration>
        </body>

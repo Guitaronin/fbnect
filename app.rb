@@ -7,7 +7,7 @@ require 'koala'
 # register your app at facebook to get those infos
 APP_ID = 196067387115119 # your app id
 APP_CODE = 'b140473706e8567150a196cccb776886' # your app code
-SITE_URL = 'http://staging.numberguru.com/' # your app site url
+SITE_URL = 'https://staging.numberguru.com/' # your app site url
 
 class App < Sinatra::Application
 

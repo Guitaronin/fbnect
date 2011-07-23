@@ -10,6 +10,7 @@ APP_CODE = 'b140473706e8567150a196cccb776886' # your app code
 SITE_URL = 'http://staging.numberguru.com/' # your app site url
 
 class App < Sinatra::Application
+  OpenSSL::SSL::VERIFY_PEER = OpenSSL::SSL::VERIFY_NONE
 
 	include Koala  
 

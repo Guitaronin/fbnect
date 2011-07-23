@@ -1,12 +1,13 @@
-# APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+SECRET# APP_ROOT = File.expand_path(File.join(File.dirname(__FILE__), '..'))
 
 require 'rubygems'
 require 'sinatra'
 require 'koala'
 
 # register your app at facebook to get those infos
-APP_ID = 196067387115119 # your app id
-APP_CODE = 'b140473706e8567150a196cccb776886' # your app code
+# APP_ID = 196067387115119 # your app id
+APP_ID = 119118001500358 # your app id
+SECRET = 'b140473706e8567150a196cccb776886' # your app code
 SITE_URL = 'http://staging.numberguru.com/' # your app site url
 
 class App < Sinatra::Application
@@ -34,7 +35,7 @@ class App < Sinatra::Application
 
 	get '/login' do
 		# generate a new oauth object with your app data and your callback url
-		session['oauth'] = Facebook::OAuth.new(APP_ID, APP_CODE, SITE_URL + 'callback')
+		session['oauth'] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
 		# redirect to facebook to get your code
 		redirect session['oauth'].url_for_oauth_code()
 	end

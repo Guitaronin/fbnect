@@ -53,10 +53,15 @@ class App < Sinatra::Application
     
     if user_info
       graph = Koala::Facebook::GraphAPI.new(user_info['access_token'])
-      data  = graph.get_object('me')
-      return data.inspect
-      # @name  = data['name']
-      # @email = data['email']
+      user  = graph.get_object('me')
+      # return data.inspect
+      @id    = user['id']
+      @name  = user['name']
+      @email = user['email']
+      
+      @photo = graph.get_picture(@id)
+      
+      return "id: #{@id}, name: #{@name}, email: #{@email}, photo: #{@photo}"
       
     else
       redirect '/login'

@@ -47,7 +47,7 @@ class App < Sinatra::Application
      </html>*
 	end
 	
-	get '/profile' do
+	post '/profile' do
 	  oauth     = Koala::Facebook::OAuth.new(APP_ID, SECRET)
     user_info = oauth.get_user_info_from_cookies(request.cookies)
     

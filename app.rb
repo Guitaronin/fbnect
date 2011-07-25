@@ -32,14 +32,14 @@ class App < Sinatra::Application
     #   '<a href="/login">Login</a>'
     # end
     
-    fb_cookie_name = request.cookies.keys.find {|cn| cn =~ /^fbs_/}
-    fb_cookie      = request.cookies[fb_cookie_name]
-    if fb_cookie
+    # fb_cookie_name = request.cookies.keys.find {|cn| cn =~ /^fbs_/}
+    # fb_cookie      = request.cookies[fb_cookie_name]
+    # if fb_cookie
       oauth = Koala::Facebook::OAuth.new(APP_ID, SECRET)
-      @data = oauth.get_user_info_from_cookies(fb_cookie)
+      @data = oauth.get_user_info_from_cookies(request.cookies)
       
-      return @data.inspect
-    else
+      return @data.inspect if @data
+    # else
       %Q*<html>
           <head>
             <title>My Facebook Login Page</title>
@@ -57,11 +57,9 @@ class App < Sinatra::Application
             <fb:login-button perms="email,user_checkins">
                Login with Facebook
             </fb:login-button>
-          
-            <div>#{request.cookies.inspect}</div>
           </body>
        </html>*
-    end
+    # end
 	end
 
 	get '/login' do

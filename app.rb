@@ -54,11 +54,11 @@ class App < Sinatra::Application
     if user_info
       graph = Koala::Facebook::GraphAPI.new(user_info['access_token'])
       user  = graph.get_object('me')
-      return user.inspect
+      # return user.inspect
       @id    = user['id']
       @name  = user['name']
       @email = user['email']
-      @location = user['location']
+      @location = user['location'] ? user['location']['name'] : nil
       
       @photo = graph.get_picture(@id)
       
@@ -70,6 +70,7 @@ class App < Sinatra::Application
             <img src="#{@photo}" style="float:left"/>
             <h1>Welcome, #{@name}!</h1>
             <p>Your email is: #{@email}</p>
+            <p>Your location is: #{@location}</p>
           </body>
        </html>*
       

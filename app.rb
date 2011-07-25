@@ -54,7 +54,7 @@ class App < Sinatra::Application
     if user_info
       graph = Koala::Facebook::GraphAPI.new(user_info['access_token'])
       user  = graph.get_object('me')
-      return data.inspect
+      return user.inspect
       @id    = user['id']
       @name  = user['name']
       @email = user['email']

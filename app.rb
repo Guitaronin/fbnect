@@ -54,7 +54,7 @@ class App < Sinatra::Application
 	  
 	  graph = Koala::Facebook::GraphAPI.new
 	  
-    output = agraph.get_object('guitaronin')
+    output = graph.get_object('guitaronin')
     return output.inspect
     # redirect '/'
 	end

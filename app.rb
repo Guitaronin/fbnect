@@ -19,60 +19,49 @@ class App < Sinatra::Application
 	enable :sessions
 
 	get '/' do
-    # if session['access_token']
-    #   'You are logged in! <a href="/logout">Logout</a>'
-    #   # do some stuff with facebook here
-    #   # for example:
-    #   # @graph = Koala::Facebook::GraphAPI.new(session["access_token"])
-    #   # publish to your wall (if you have the permissions)
-    #   # @graph.put_wall_post("I'm posting from my new cool app!")
-    #   # or publish to someone else (if you have the permissions too ;) )
-    #   # @graph.put_wall_post("Checkout my new cool app!", {}, "someoneelse's id")     
-    # else
-    #   '<a href="/login">Login</a>'
-    # end
-    
-    # fb_cookie_name = request.cookies.keys.find {|cn| cn =~ /^fbs_/}
-    # fb_cookie      = request.cookies[fb_cookie_name]
-    # if fb_cookie
-    oauth     = Koala::Facebook::OAuth.new(APP_ID, SECRET)
-    user_info = oauth.get_user_info_from_cookies(request.cookies)
-    
-    if user_info
-      graph = Koala::Facebook::GraphAPI.new(user_info['access_token'])
-
-      output = graph.get_object('me')
-      return output.inspect
-      
+    if session['access_token']
+      'You are logged in! <a href="/logout">Logout</a>'    
     else
-      %Q*<html>
-          <head>
-            <title>My Facebook Login Page</title>
-          </head>
-          <body>
-            <div id="fb-root"></div>
-            <script src="http://connect.facebook.net/en_US/all.js">
-            </script>
-            <script>
-               FB.init({ 
-                  appId:'#{APP_ID}', cookie:true, 
-                  status:true, xfbml:true 
-               });
-            </script>
-            <fb:login-button perms="email,user_checkins">
-               Login with Facebook
-            </fb:login-button>
-          </body>
-       </html>*
+      '<a href="/login">Login</a>'
     end
 	end
 
 	get '/login' do
-		# generate a new oauth object with your app data and your callback url
-		session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
-		# redirect to facebook to get your code
-		redirect session[:oauth].url_for_oauth_code()
+		%Q*<html>
+        <head>
+          <title>My Facebook Login Page</title>
+        </head>
+        <body>
+          <div id="fb-root"></div>
+          <script src="http://connect.facebook.net/en_US/all.js">
+          </script>
+          <script>
+             FB.init({ 
+                appId:'#{APP_ID}', cookie:true, 
+                status:true, xfbml:true 
+             });
+          </script>
+          <fb:registration perms="email,user_location,user_status,user_photos" fields="[{'name':'name'}, {'name':'email'}]" redirect-uri="http://staging.numberguru.com/profile">
+           </fb:registration>
+        </body>
+     </html>*
 	end
+	
+	get '/profile' do
+	  oauth     = Koala::Facebook::OAuth.new(APP_ID, SECRET)
+    user_info = oauth.get_user_info_from_cookies(request.cookies)
+    
+    if user_info
+      graph = Koala::Facebook::GraphAPI.new(user_info['access_token'])
+      data  = graph.get_object('me')
+      return data.inspect
+      # @name  = data['name']
+      # @email = data['email']
+      
+    else
+      redirect '/login'
+    end
+  end
 
 	get '/logout' do
 		session[:oauth] = nil

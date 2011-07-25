@@ -52,9 +52,9 @@ class App < Sinatra::Application
     session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
 	  session[:access_token] = session[:oauth].get_access_token(params['code'])
 	  
-	  graph = Koala::Facebook::GraphAPI.new
+	  graph = Koala::Facebook::GraphAPI.new(session[:access_token])
 	  
-    output = graph.get_object('guitaronin')
+    output = graph.get_object('me')
     return output.inspect
     # redirect '/'
 	end

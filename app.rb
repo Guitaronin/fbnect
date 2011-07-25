@@ -35,11 +35,16 @@ class App < Sinatra::Application
     # fb_cookie_name = request.cookies.keys.find {|cn| cn =~ /^fbs_/}
     # fb_cookie      = request.cookies[fb_cookie_name]
     # if fb_cookie
-      oauth = Koala::Facebook::OAuth.new(APP_ID, SECRET)
-      @data = oauth.get_user_info_from_cookies(request.cookies)
+    oauth     = Koala::Facebook::OAuth.new(APP_ID, SECRET)
+    user_info = oauth.get_user_info_from_cookies(request.cookies)
+    
+    if user_info
+      graph = Koala::Facebook::GraphAPI.new(user_info['access_token'])
+
+      output = graph.get_object('me')
+      return output.inspect
       
-      return @data.inspect if @data
-    # else
+    else
       %Q*<html>
           <head>
             <title>My Facebook Login Page</title>
@@ -59,7 +64,7 @@ class App < Sinatra::Application
             </fb:login-button>
           </body>
        </html>*
-    # end
+    end
 	end
 
 	get '/login' do

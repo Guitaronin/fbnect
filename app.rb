@@ -50,7 +50,7 @@ class App < Sinatra::Application
 	get '/callback' do
     # return params.inspect
 		#get the access token from facebook with your code
-		session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET)
+		session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
     # if session[:oauth]
 		  session[:access_token] = session[:oauth].get_access_token(params['code'])
     # else

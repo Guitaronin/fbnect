@@ -48,15 +48,15 @@ class App < Sinatra::Application
 	
 	#method to handle the redirect from facebook back to you
 	get '/callback' do
-    # return params.inspect
 		#get the access token from facebook with your code
-		session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
-    # if session[:oauth]
-		  session[:access_token] = session[:oauth].get_access_token(params['code'])
-    # else
-	    return session.inspect
-    # end
-		redirect '/'
+    session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
+	  session[:access_token] = session[:oauth].get_access_token(params['code'])
+	  
+	  graph = Koala::Facebook::GraphAPI.new
+	  
+    output = agraph.get_object('guitaronin')
+    return output.inspect
+    # redirect '/'
 	end
 	
 	get '/v2' do

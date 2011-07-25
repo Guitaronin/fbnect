@@ -32,28 +32,36 @@ class App < Sinatra::Application
     #   '<a href="/login">Login</a>'
     # end
     
-    
-    %Q*<html>
-        <head>
-          <title>My Facebook Login Page</title>
-        </head>
-        <body>
-          <div id="fb-root"></div>
-          <script src="http://connect.facebook.net/en_US/all.js">
-          </script>
-          <script>
-             FB.init({ 
-                appId:'#{APP_ID}', cookie:true, 
-                status:true, xfbml:true 
-             });
-          </script>
-          <fb:login-button perms="email,user_checkins">
-             Login with Facebook
-          </fb:login-button>
+    fb_cookie_name = request.cookies.keys.find {|cn| cn =~ /^fbs_/}
+    fb_cookie      = request.cookies[fb_cookie_name]
+    if fb_cookie
+      oauth = Koala::Facebook::OAuth.new(APP_ID, SECRET)
+      @data = oauth.get_user_info_from_cookies(fb_cookie)
+      
+      return @data.inspect
+    else
+      %Q*<html>
+          <head>
+            <title>My Facebook Login Page</title>
+          </head>
+          <body>
+            <div id="fb-root"></div>
+            <script src="http://connect.facebook.net/en_US/all.js">
+            </script>
+            <script>
+               FB.init({ 
+                  appId:'#{APP_ID}', cookie:true, 
+                  status:true, xfbml:true 
+               });
+            </script>
+            <fb:login-button perms="email,user_checkins">
+               Login with Facebook
+            </fb:login-button>
           
-          <div>#{request.cookies.inspect}</div>
-        </body>
-     </html>*
+            <div>#{request.cookies.inspect}</div>
+          </body>
+       </html>*
+    end
 	end
 
 	get '/login' do

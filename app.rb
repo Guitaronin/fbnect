@@ -61,7 +61,16 @@ class App < Sinatra::Application
       
       @photo = graph.get_picture(@id)
       
-      return "id: #{@id}, name: #{@name}, email: #{@email}, photo: #{@photo}"
+      %Q*<html>
+          <head>
+            <title>My Facebook Profile Page</title>
+          </head>
+          <body>
+            <img src="#{@photo}" style="float:left"/>
+            <h1>Welcome, #{@name}!</h1>
+            <p>Your email is: #{@email}</p>
+          </body>
+       </html>*
       
     else
       redirect '/login'

@@ -35,14 +35,14 @@ class App < Sinatra::Application
 
 	get '/login' do
 		# generate a new oauth object with your app data and your callback url
-		session['oauth'] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
+		session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET, SITE_URL + 'callback')
 		# redirect to facebook to get your code
-		redirect session['oauth'].url_for_oauth_code()
+		redirect session[:oauth].url_for_oauth_code()
 	end
 
 	get '/logout' do
-		session['oauth'] = nil
-		session['access_token'] = nil
+		session[:oauth] = nil
+		session[:access_token] = nil
 		redirect '/'
 	end
 	
@@ -50,11 +50,12 @@ class App < Sinatra::Application
 	get '/callback' do
     # return params.inspect
 		#get the access token from facebook with your code
-		if session['oauth']
-		  session['access_token'] = session['oauth'].get_access_token(params['code'])
-	  else
+		session[:oauth] = Facebook::OAuth.new(APP_ID, SECRET)
+    # if session[:oauth]
+		  session[:access_token] = session[:oauth].get_access_token(params['code'])
+    # else
 	    return session.inspect
-    end
+    # end
 		redirect '/'
 	end
 	

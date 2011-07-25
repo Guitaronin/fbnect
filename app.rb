@@ -19,18 +19,41 @@ class App < Sinatra::Application
 	enable :sessions
 
 	get '/' do
-		if session['access_token']
-		  'You are logged in! <a href="/logout">Logout</a>'
-			# do some stuff with facebook here
-			# for example:
-			# @graph = Koala::Facebook::GraphAPI.new(session["access_token"])
-			# publish to your wall (if you have the permissions)
-			# @graph.put_wall_post("I'm posting from my new cool app!")
-			# or publish to someone else (if you have the permissions too ;) )
-			# @graph.put_wall_post("Checkout my new cool app!", {}, "someoneelse's id")			
-		else
-			'<a href="/login">Login</a>'
-		end
+    # if session['access_token']
+    #   'You are logged in! <a href="/logout">Logout</a>'
+    #   # do some stuff with facebook here
+    #   # for example:
+    #   # @graph = Koala::Facebook::GraphAPI.new(session["access_token"])
+    #   # publish to your wall (if you have the permissions)
+    #   # @graph.put_wall_post("I'm posting from my new cool app!")
+    #   # or publish to someone else (if you have the permissions too ;) )
+    #   # @graph.put_wall_post("Checkout my new cool app!", {}, "someoneelse's id")     
+    # else
+    #   '<a href="/login">Login</a>'
+    # end
+    
+    
+    %Q*<html>
+        <head>
+          <title>My Facebook Login Page</title>
+        </head>
+        <body>
+          <div id="fb-root"></div>
+          <script src="http://connect.facebook.net/en_US/all.js">
+          </script>
+          <script>
+             FB.init({ 
+                appId:'#{APP_ID}', cookie:true, 
+                status:true, xfbml:true 
+             });
+          </script>
+          <fb:login-button perms="email,user_checkins">
+             Login with Facebook
+          </fb:login-button>
+          
+          <div>#{request.cookies.inspect}</div>
+        </body>
+     </html>*
 	end
 
 	get '/login' do
